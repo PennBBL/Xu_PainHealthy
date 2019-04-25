@@ -1,0 +1,82 @@
+---
+title: "Extract Results"
+output: html_notebook
+---
+
+# About this notebook
+
+Written by AX (04/01/2019) <br><br>
+**Purpose**<br>
+1. Concatenate cluster text statistics into one .csv file<br>
+2. Extract only the coordinates as a text file in order to input into Anatomy Toolbox on MATLAB<br>
+<br>
+**Input**: text files of cluster statistics<br>
+--NOTE: This is equivalent to just putting the .Rproj into `clusterTexts`<br><br>
+**Outputs**: <br>
+1. `.csv` file of all contrast clusters concatenated into one<br>
+2. `.txt` file of all coordinates
+<br><br>
+**NOTE**: Must keep directory structure exactly the same for best use.
+
+# 1. Setup
+
+Get the relevant functions needed for this notebook.<br>
+<ul>
+<li> `statsTable()` is a wrapper function that will output a dataframe of all the columns in the text files (with a variable `title` to indicate the text file the statistics came from). It depends on the function `readStatistics()` to do so (see documentation in script `setup.R`).</li>
+</ul>
+
+```{r}
+source("setup.R")
+```
+
+# 2. Read in Data
+
+<ol type="1">
+<li>Set the working directory to the appropriate one given the analysis of interest. </li>
+<li>Run `statsTable()` to output a dataframe of all the text files of interest in that directory.
+</ol>
+
+### A. Between-study Contrasts
+
+```{r}
+setwd("thresh")
+contrastTables <- statsTable()
+setwd("..")
+```
+
+### B. Main Effects
+
+```{r}
+setwd("mainEffects")
+mainTables <- statsTable()
+setwd("..")
+```
+
+### C. Conjunction
+
+```{r}
+setwd("conjunctions")
+conjunctionTables <- statsTable()
+setwd("..")
+```
+
+# 3. Bind everything and output
+
+### A. Bind all and get only peak coordinates
+```{r}
+allData <- rbind(contrastTables, mainTables, conjunctionTables)
+allData <- na.omit(allData)
+coords <- allData[,4:6]
+allData
+coords
+```
+
+### B. Output relevant files
+<ol type="A">
+<li>`.csv` file of the results</li>
+<li>`.txt` file of the coordinates</li>
+</ol>
+```{r}
+write.csv(allData, "painHealthyResults_20190401.csv")
+write.table(coords, "painHealthyResultsCoords_20190401.txt", sep=" ", row.names=F, col.names=F)
+```
