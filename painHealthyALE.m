@@ -17,6 +17,6 @@ cd EickhoffALE
 
 %% Script
     % input coordinates
-ale_inputCoords('data/painHealthyCoords_20190401.xls');
+ale_inputCoords('data/painHealthyCoords_20190426.xls');
     % run analyses
 ale_estimateALE('contrasts/painHealthyAnalyses_20190401.xlsx');
