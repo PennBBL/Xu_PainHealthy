@@ -23,12 +23,12 @@
 %
 %   5. Move appropriate figures to the Figures folder.
 % --------------------------
-% Written by AX 04/01/2019
+% Written by AX 04/26/2019
 
 %% Set parameters
 % Specify the number of effects expected to generate figures for:
-numME=17; % number of main effects
-numConj=7; % number of conjunctions
+numME=16; % number of main effects
+numConj=6; % number of conjunctions
 % note: contrast is tricky for reasons stated in the between-groups study
 % contrast section
 
